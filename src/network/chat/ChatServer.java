@@ -22,6 +22,7 @@ public class ChatServer {
 
     public static void main(String[] args) throws IOException {
         final ServerSocket serverSocket = new ServerSocket(12345);
+        final SessionManager sessionManager = SessionManager.getInstance();
 
         while (true) {
             try {
@@ -30,9 +31,10 @@ public class ChatServer {
                 Socket socket = serverSocket.accept();
                 log("[ChatServer] 클라이언트 연결 : " + socket);
 
-                ChatSession session = new ChatSession(socket);
-                new Thread(session)
-                        .start();
+                ChatSession session = new ChatSession(socket, sessionManager);
+
+                sessionManager.addSession(session);
+                new Thread(session).start();
             } catch (Exception e) {
                 break;
             }

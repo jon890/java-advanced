@@ -1,5 +1,7 @@
 package network.chat;
 
+import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class SessionManager {
@@ -26,5 +28,9 @@ public class SessionManager {
 
     public void removeSession(ChatSession session) {
         sessions.remove(session);
+    }
+
+    public Queue<ChatSession> getSessions() {
+        return this.sessions;
     }
 }
