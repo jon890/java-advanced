@@ -50,9 +50,16 @@ public class ChatSession implements Runnable {
             final String nickname = chat.split("\\|")[1];
             this.nickname = nickname;
             this.initialized = true;
-            log(String.format("[ChatSession] 닉네임이 %s로 설정되었습니다", nickname));
-            sendMessage("OK");
+
+            final String message = String.format("[ChatServer] 닉네임이 %s로 설정되었습니다", nickname);
+            sendMessage(message);
         } else if (chat.startsWith("/message")) {
+            if (!initialized) {
+                final String message = "[ChatServer] 닉네임이 아직 설정되지 않았어요. 닉네임을 먼저 설정해주세요";
+                sendMessage(message);
+                return;
+            }
+
             // 메시지 전송
             final String message = chat.split("\\|")[1];
 
